@@ -37,11 +37,11 @@ pub fn rasterize_triangle<V: VertexTrait>(tri : &Triangle<V>, frame_width : i16,
     let y0 : usize = unsafe {(screen_center.y - (bounding_box.upper.y * screen_center.y)).to_int_unchecked() };//should be positive!
     let y1 : usize = unsafe {(screen_center.y - (bounding_box.lower.y * screen_center.y)).to_int_unchecked() };//should be positive!
     let x0 : usize = unsafe {(screen_center.x + (bounding_box.upper.x * screen_center.x)).to_int_unchecked() };//should be positive!
-    let x1 : usize = unsafe {(screen_center.x + (bounding_box.upper.x * screen_center.x)).to_int_unchecked() };//should be positive!
+    let x1 : usize = unsafe {(screen_center.x + (bounding_box.lower.x * screen_center.x)).to_int_unchecked() };//should be positive!
     println!("rasterizing in range y : {}-{}, x : {}-{}", y0, y1, x0, x1);
     for y in y0..y1 {
         let row = &mut frame_buffer[(y * pitch)..];
-        for x in y0..y1 {
+        for x in x0..x1 {
             let offset = x * 3;
             row[offset + 0] = color.r;
             row[offset + 1] = color.g;
